@@ -5,3 +5,6 @@
 
 ## [ABC008](http://abc008.contest.atcoder.jp/) 2014/05/10
 200/400点 169位
+
+## [ABC010](http://abc008.contest.atcoder.jp/) 2014/06/08
+399/400点 54位
