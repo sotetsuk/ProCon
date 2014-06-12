@@ -1,72 +1,45 @@
 #include <iostream>
-#include <vector>
-#include <algorithm>
 using namespace std;
 
+const int MAX_R = 10, MAX_C = 1000;
 int R, C;
-int mat[15][10005];
-int mat2[15][10005];
-int vec[10005];
+int grid[MAX_R+5][MAX_C+5];
+int bit[MAX_R+5];
 
-int dfs(int num, int count) {
-    if(count == 1) {
-        return num;
-    } else {
-        count--;
-        return num*dfs(num, count);
+int count() {
+    int ret = 0;
+    for(int i = 0; i < C; i++) {
+        int tmp = 0;
+        for(int j = 0; j < R; j++) {
+            if((bit[j]&&grid[j][i]) || (!bit[j]&&!grid[j][i])) tmp++;
+        }
+        ret += max(tmp, R-tmp);
     }
+    return ret;
 }
 
 int solve() {
-    // input
-    cin >> R >> C;
-    for(int i = 0; i < R; i++) {
-        for(int j = 0; j < C; j++) {
-            cin >> mat[i][j];
-        }
-    }
-
-
-    for(int i = 0; i < count(2, R); i++) {
-        int v[R];
+    int ans = 0;
+    for(int i = 0; i < 1<<R; i++) {
         for(int j = 0; j < R; j++) {
-            v[j] = i%j;
+            bit[j] = (i >> j)%2;
         }
-
-        for(int k = 0; k < R; k++) {
-            if(v[k]) {
-                for(int l = 0; l < C; l++) {
-                    if(mat[k][l] == 1) {
-                        mat2[k][l] = 0;
-                    } else {
-                        mat2[k][l] = 1;
-                    }
-                }
-            }
-        }
-
-        for(int k = 0; k < R; k++) {
-            for(int l = 0; l < C; l++) {
-                if(k == 0) {
-                    vec[l] = 0;
-                }
-                if(mat[0][l] != mat2[k][l]) {
-                    vec[l]++;
-                }
-            }
-        }
-
-        for(int k = 0; k < R; k++) {
-            if(vec)
-        }
-
+        ans = max(ans, count());
     }
-
+    cout << ans << endl;
     return 0;
 }
 
-
-int main(){
-    solve();
+int main() {
+    while(true) {
+        cin >> R >> C;
+        if(!R && !C) break;
+        for(int i = 0; i < R; i++) {
+            for(int j = 0; j < C; j++) {
+                cin >> grid[i][j];
+            }
+        }
+        solve();
+    }
     return 0;
 }
