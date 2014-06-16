@@ -1,7 +1,7 @@
 #include <iostream>
 using namespace std;
 
-const int MAX_R = 10, MAX_C = 1000;
+const int MAX_R = 10, MAX_C = 10000;
 int R, C;
 int grid[MAX_R+5][MAX_C+5];
 int bit[MAX_R+5];
