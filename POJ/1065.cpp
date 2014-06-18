@@ -1,13 +1,30 @@
 #include <iostream>
 #include <vector>
+#include <algorithm>
 using namespace std;
 
 typedef pair<int, int> P;
 
-const int MAX_N = 10000;
+const int MAX_N = 5000;
 int T, N;
 int l[MAX_N+5];
 int w[MAX_N+5];
+int dp[MAX_N+5];
+
+int dfs(vector<P> &v) {
+    int ret = 0;
+    for(int i = 0; i < v.size(); i++) {
+        dp[i] = 1;
+        for(int j = 0; j < i; j++) {
+            if(v[i].second < v[j].second) {
+                dp[i] = max(dp[i], dp[j]+1);
+            }
+        }
+        ret = max(ret, dp[i]);
+    }
+
+    return ret;
+}
 
 int solve() {
     vector<P> v;
@@ -18,9 +35,8 @@ int solve() {
 
     sort(v.begin(), v.end());
 
-    for(int i = 0; i < N; i++) {
-        cout << v[i].first << " " << v[i].second << endl;
-    }
+    int ans = dfs(v);
+    cout << ans << endl;
     return 0;
 }
 
@@ -28,11 +44,10 @@ int main() {
     cin >> T;
     for(int i = 0; i < T; i++) {
         cin >> N;
-        cout << "### " << i << endl;
         for(int j = 0; j < N; j ++) {
             cin >> l[j] >> w[j];
         }
-            solve();
+        solve();
     }
     return 0;
 }
