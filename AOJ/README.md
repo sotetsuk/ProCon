@@ -16,4 +16,7 @@
 **[BFS]** mapでDPしないと間に合わない．
 
 ### [2170 Marked Ancestor](http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=2170) 2014/06/29(WA)
-**[Union-find tree]**
+**[Union-find tree]** unite時にrankを見て高さ調整をしないunion-find木で実装したが，WA．わからない．
+
+### [0189 Convinient location](http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=0189) 2014/07/02
+**[最短路]** ワーシャルフロイド
