@@ -15,7 +15,7 @@
 ### [0121 Sevun Puzzle](http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=0121) 2014/06/17
 **[BFS]** mapでDPしないと間に合わない．
 
-### [2170 Marked Ancestor](http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=2170) 2014/06/29
+### [2170 Marked Ancestor](http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=2170) 2014/07/03
 **[Union-find tree]** 同じnodeが2回マークされるときを見逃していたせいでWA連発した．
 
 ### [0189 Convinient location](http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=0189) 2014/07/02
