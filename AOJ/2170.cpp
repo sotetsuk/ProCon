@@ -1,6 +1,6 @@
 #include <iostream>
-#include <vector>
 #include <algorithm>
+#include <stack>
 using namespace std;
 typedef pair<char, int> P;
 
@@ -9,11 +9,15 @@ int N, Q;
 
 int par[MAX_N+5];
 int par2[MAX_N+5];
+bool marked[MAX_N+5];
+
+stack<P> s;
 
 void init(int N) {
     for(int i = 0; i <= N; i++) {
         par[i] = i;
         par2[i] = i;
+        marked[i] = false;
     }
 }
 
@@ -33,13 +37,6 @@ void unite(int x, int y) {
     par[y] = x;
 }
 
-void show_par() {
-    for(int i = 1; i <= N; i++) {
-        cout << i << ": " << par[i] << ", ";
-    }
-    cout << endl;
-}
-
 int main() {
     while(true) {
         // input
@@ -52,31 +49,30 @@ int main() {
             par[i] = p;
             par2[i] = p;
         }
-        vector<P> v;
         char c;
         int t;
         for(int i = 0; i < Q; i++) {
             cin >> c >> t;
             if(c == 'M') {
+                if(marked[t]) continue;
+                marked[t] = true;
                 par[t] = t;
             }
             P q;
             q.first = c;
             q.second = t;
-            v.push_back(q);
+            s.push(q);
         }
 
         // solve
         long long int ans = 0;
-        show_par();
-        for(int i = v.size()-1; i >= 0; i--) {
-            if(v[i].first == 'M') {
-                unite(par2[v[i].second], v[i].second);
+        while(!s.empty()) {
+            P q = s.top(); s.pop();
+            if(q.first == 'M') {
+                unite(par2[q.second], q.second);
             } else {
-                ans += find(v[i].second);
+                ans += find(q.second);
             }
-            cout << v[i].first << " " << v[i].second << endl;
-            show_par();
         }
         cout << ans << endl;
     }
