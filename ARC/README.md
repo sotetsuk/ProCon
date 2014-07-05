@@ -8,3 +8,6 @@
 
 ## [ARC025](http://arc025.contest.atcoder.jp/) 2014/06/14
 200/400点 96位
+
+## [ARC026](http://arc026.contest.atcoder.jp/) 2014/07/04
+不参加
