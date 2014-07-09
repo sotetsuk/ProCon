@@ -24,3 +24,6 @@
 プライオリティキューを使う問題．
 
 参考: http://d.hatena.ne.jp/sune2/20120719/1342658409
+
+### [1258 Agri-Net](http://poj.org/problem?id=1258) 2014/07/9
+**[最小全域木]** Prim法で解いた．

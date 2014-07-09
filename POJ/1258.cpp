@@ -1,9 +1,14 @@
-// O(V^2)
+#include <iostream>
+using namespace std;
 
+const int INF = 100005;
+const int MAX_V = 105;
+
+// O(v^2)
 int cost[MAX_V][MAX_V]; // the weight of edge from u to v
-int minconst[MAX_V]; // distance from tree X
+int mincost[MAX_V]; // distance from tree X
 bool used[MAX_V]; // true if in tree X
-int v; // num of vertex
+int V; // num of vertex
 
 int prim() {
     for(int i = 0; i < V; i++) {
@@ -17,7 +22,7 @@ int prim() {
     while(true) {
         int v = -1;
         for(int u = 0; u < V; u++) {
-            if(!used[i] && (v == -1 || mincost[u] < mincost[v])) v = u;
+            if(!used[u] && (v == -1 || mincost[u] < mincost[v])) v = u;
         }
 
         if (v == -1) break;
@@ -30,4 +35,19 @@ int prim() {
     }
 
     return res;
+}
+
+int main() {
+    while(cin >> V) {
+        for(int i = 0; i < V; i++) {
+            for(int j = 0; j < V; j++) {
+                cin >> cost[i][j];
+            }
+        }
+
+        int ans = prim();
+        cout << ans << endl;
+    }
+
+    return 0;
 }
