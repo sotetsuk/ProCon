@@ -3,14 +3,17 @@ using namespace std;
 
 const int INF = 100005;
 const int MAX_V = 105;
+int V;
 
-// O(v^2)
+// O(V^2)
 int cost[MAX_V][MAX_V]; // the weight of edge from u to v
-int mincost[MAX_V]; // distance from tree X
-bool used[MAX_V]; // true if in tree X
-int V; // num of vertex
 
-int prim() {
+int prim(int V, int (*cost)[MAX_V]) {
+    // V: num of vertex
+
+    int mincost[V]; // distance from tree X
+    bool used[V]; // true if in tree X
+
     for(int i = 0; i < V; i++) {
         mincost[i] = INF;
         used[i] = false;
@@ -45,7 +48,7 @@ int main() {
             }
         }
 
-        int ans = prim();
+        int ans = prim(V, cost);
         cout << ans << endl;
     }
 

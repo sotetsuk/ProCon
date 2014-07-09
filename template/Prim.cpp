@@ -1,11 +1,12 @@
 // O(V^2)
-
 int cost[MAX_V][MAX_V]; // the weight of edge from u to v
-int minconst[MAX_V]; // distance from tree X
-bool used[MAX_V]; // true if in tree X
-int v; // num of vertex
 
-int prim() {
+int prim(int V, int (*cost)[MAX_V]) {
+    // V: num of vertex
+
+    int mincost[V]; // distance from tree X
+    bool used[V]; // true if in tree X
+
     for(int i = 0; i < V; i++) {
         mincost[i] = INF;
         used[i] = false;
@@ -17,7 +18,7 @@ int prim() {
     while(true) {
         int v = -1;
         for(int u = 0; u < V; u++) {
-            if(!used[i] && (v == -1 || mincost[u] < mincost[v])) v = u;
+            if(!used[u] && (v == -1 || mincost[u] < mincost[v])) v = u;
         }
 
         if (v == -1) break;
