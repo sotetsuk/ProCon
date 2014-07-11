@@ -16,7 +16,7 @@ bool comp(const Edge& e1, const Edge& e2) {
 }
 
 vector<Edge> es;
-int V, E;
+int V;
 
 struct UF{
     vector<int> par;
@@ -37,11 +37,11 @@ struct UF{
     }
 };
 
-int kruskal() {
+int kruskal(int V, vector<Edge>& es) {
     sort(es.begin(), es.end(), comp);
     UF uf(V);
     int res = 0;
-    for(int i = 0; i < E; i++) {
+    for(int i = 0; i < es.size(); i++) {
         Edge e = es[i];
         if(!uf.same(e.u, e.v)) {
             uf.unite(e.u, e.v);
@@ -61,8 +61,7 @@ int main() {
                 if(i < j) es.push_back(Edge(i, j, c));
             }
         }
-        E = es.size();
-        cout << kruskal() << endl;
+        cout << kruskal(V, es) << endl;
     }
 
     return 0;
