@@ -1,16 +1,21 @@
 #include <iostream>
 #include <vector>
+#include <algorithm>
 using namespace std;
 
 // O(E*log(V))
+struct Edge {
+    Edge(int a, int b, int c) {
+        u = a; v = b; cost = c;
+    }
+    int u, v, cost;
+};
 
-struct edge { int u, v, cost; };
-
-bool comp(const edge& e1, const edge& e2) {
+bool comp(const Edge& e1, const Edge& e2) {
     return e1.cost < e2.cost;
 }
 
-vector<edge> es;
+vector<Edge> es;
 int V, E;
 
 struct UF{
@@ -37,7 +42,7 @@ int kruskal() {
     UF uf(V);
     int res = 0;
     for(int i = 0; i < E; i++) {
-        edge e = es[i];
+        Edge e = es[i];
         if(!uf.same(e.u, e.v)) {
             uf.unite(e.u, e.v);
             res += e.cost;
@@ -49,13 +54,16 @@ int kruskal() {
 int main() {
     int c;
     while(cin >> V) {
+        es = vector<Edge>();
         for(int i = 0; i < V; i++) {
             for(int j = 0; j < V; j++) {
                 cin >> c;
-                if(i < j) es.push_back(edge(i, j, c));
+                if(i < j) es.push_back(Edge(i, j, c));
             }
         }
+        E = es.size();
+        cout << kruskal() << endl;
     }
-    cout << kruskal() << endl;
+
     return 0;
 }
