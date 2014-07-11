@@ -27,3 +27,6 @@
 
 ### [1258 Agri-Net](http://poj.org/problem?id=1258) 2014/07/9
 **[最小全域木]** Prim法で解いた．
+
+### [2236 Wireless Network](http://poj.org/problem?id=2236) 2014/07/12
+**[Union-find]** cinがボトルネックでTLE連発した．

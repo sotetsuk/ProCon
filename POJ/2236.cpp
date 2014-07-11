@@ -10,38 +10,29 @@ bool repaired[MAX_N];
 int cords[2][MAX_N];
 int par[MAX_N];
 int uf_rank[MAX_N];
-double dis[MAX_N][MAX_N];
 
 double distance(int x0, int y0, int x1, int y1) {
     return hypot(x1-x0, y1-y0);
 }
 
-void init(int m) {
-    for(int i = 0; i < m; i++){
-        par[i] = i;
-        uf_rank[i] = 0;
+struct UF{
+    vector<int> par;
+    UF(int m) : par(m){
+        for(int i = 0; i < m; i++){
+            par[i] = i;
+        }
     }
-}
-
-int find(int x){
-    return x != par[x] ? par[x] = find(par[x]) : x;
-}
-
-bool same(int x, int y) {
-    return find(x) == find(y);
-}
-
-void unite(int x, int y){
-    x = find(x); y = find(y);
-    if(x == y) return;
-    // y is above
-    if(uf_rank[x] < uf_rank[y]) {
-        par[x] = y;
-    } else {
-        par[y] = x;
-        if(uf_rank[x] == uf_rank[y]) uf_rank[x]++;
+    int find(int x){
+        return x != par[x] ? par[x] = find(par[x]) : x;
     }
-}
+    bool same(int x, int y) {
+        return find(x) == find(y);
+    }
+    void unite(int x, int y){
+        // y is above
+        if(!same(x, y)) par[find(x)] = find(y);
+    }
+};
 
 int main() {
     cin >> N >> d;
@@ -50,7 +41,7 @@ int main() {
         scanf("%d %d", &cords[0][i], &cords[1][i]);
     }
 
-    init(N);
+    UF uf(N);
 
     char c, o; scanf("%c", &c);
     int n, j, k;
@@ -61,18 +52,15 @@ int main() {
                 repaired[n] = true;
                 for(int i = 0; i < N; i++) {
                     if(repaired[i]) {
-                        if(!dis[n][i]) {
-                            double d0 = distance(cords[0][n], cords[1][n],
-                                                 cords[0][i], cords[1][i]);
-                            dis[n][i] = d0; dis[i][n] = d0;
-                        }
-                        if(dis[n][i] <= d) unite(n, i);
+                        double d0 = distance(cords[0][n], cords[1][n],
+                                             cords[0][i], cords[1][i]);
+                        if(d0 <= d) uf.unite(n, i);
                     }
                 }
             }
         } else {
             scanf("%d %d", &j, &k); j--; k--;
-            puts(same(j, k) ? "SUCCESS" : "FAIL");
+            puts(uf.same(j, k) ? "SUCCESS" : "FAIL");
         }
         scanf("%c", &c);
     }
