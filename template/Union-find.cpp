@@ -20,7 +20,6 @@ struct UF{
 };
 
 // with rank
-// ex) KUPC2014:C
 struct UF{
 	vector<int> par;
 	vector<int> rank;
