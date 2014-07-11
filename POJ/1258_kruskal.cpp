@@ -1,14 +1,10 @@
 #include <iostream>
+#include <vector>
 using namespace std;
 
 // O(E*log(V))
 
-struct Edge {
-    Edge(int u, int v, int c) {
-        
-    }
-    int u, v, cost;
-};
+struct edge { int u, v, cost; };
 
 bool comp(const edge& e1, const edge& e2) {
     return e1.cost < e2.cost;
@@ -48,4 +44,18 @@ int kruskal() {
         }
     }
     return res;
+}
+
+int main() {
+    int c;
+    while(cin >> V) {
+        for(int i = 0; i < V; i++) {
+            for(int j = 0; j < V; j++) {
+                cin >> c;
+                if(i < j) es.push_back(edge(i, j, c));
+            }
+        }
+    }
+    cout << kruskal() << endl;
+    return 0;
 }
