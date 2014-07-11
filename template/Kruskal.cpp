@@ -1,8 +1,4 @@
-#include <iostream>
-using namespace std;
-
 // O(E*log(V))
-
 struct Edge {
     Edge(int a, int b, int c) {
         u = a; v = b; cost = c;
@@ -13,9 +9,6 @@ struct Edge {
 bool comp(const Edge& e1, const Edge& e2) {
     return e1.cost < e2.cost;
 }
-
-vector<Edge> es;
-int V, E;
 
 struct UF{
     vector<int> par;
@@ -36,11 +29,11 @@ struct UF{
     }
 };
 
-int kruskal() {
+int kruskal(int V, vector<Edge>& es) {
     sort(es.begin(), es.end(), comp);
     UF uf(V);
     int res = 0;
-    for(int i = 0; i < E; i++) {
+    for(int i = 0; i < es.size(); i++) {
         Edge e = es[i];
         if(!uf.same(e.u, e.v)) {
             uf.unite(e.u, e.v);
@@ -49,3 +42,6 @@ int kruskal() {
     }
     return res;
 }
+
+vector<Edge> es;
+int V;
