@@ -20,3 +20,6 @@
 
 ### [0189 Convinient location](http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=0189) 2014/07/02
 **[最短路]** ワーシャルフロイド
+
+### [2224 Save your cat](http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=2224) 2014/7/11
+**[最小全域木]** 最小ではなく，最大全域木をKruskal法で求める．
