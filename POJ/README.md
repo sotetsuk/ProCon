@@ -30,3 +30,6 @@
 
 ### [2236 Wireless Network](http://poj.org/problem?id=2236) 2014/07/12
 **[Union-find]** cinがボトルネックでTLE連発した．
+
+### [1703 Find them, Catch them](http://poj.org/problem?id=1703) 2014/07/12
+**[Union-find]** 2倍の大きさのUF木をつくり，「aとbが違う」をuntie(a, b+N), unite(a+N, b)で表現．
