@@ -41,7 +41,7 @@ bool is_prime[MAX_N + 1];
 // return the number of primes <= n
 int sieve(int n) {
     int p = 0;
-    for(int j = 0; i <= n; i++) is_prime[i] = true;
+    for(int i = 0; i <= n; i++) is_prime[i] = true;
     is_prime[0] = is_prime[1] = false;
     for(int i = 2; i <= n; i++) {
         if (is_prime[i]) {
