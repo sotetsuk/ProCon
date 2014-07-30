@@ -33,3 +33,6 @@
 
 ### [1703 Find them, Catch them](http://poj.org/problem?id=1703) 2014/07/12
 **[Union-find]** 2倍の大きさのUF木をつくり，「aとbが違う」をuntie(a, b+N), unite(a+N, b)で表現．
+
+### [3126 Prime Path](http://poj.org/problem?id=3126) 2014/07/30
+**[素数]** エラストテネスの篩を使う．すでに来たところはいかないように幅優先探索．
