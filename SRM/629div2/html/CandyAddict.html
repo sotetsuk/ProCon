@@ -1,0 +1,50 @@
+<html><body bgcolor="#000000" text="#ffffff"><table><tr><td colspan="2"><h3>Problem Statement</h3></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><p>
+Alice is a candy addict!
+She doesn't eat any food except for candy.
+More precisely, the only thing she eats on any day is one piece of candy in the evening.
+</p>
+
+<p>
+Alice receives an allowance of x dollars every morning.
+One piece of candy costs y dollars.
+We will follow Alice for z days.
+The days will be numbered 1 through z.
+At the beginning of day 1, Alice has no money and no candies.
+</p>
+
+<p>
+Each day looks as follows:
+<ol>
+<li>In the morning, Alice receives her allowance.</li>
+<li>At noon, Alice checks whether she has some candies. If she still has some candies, she does nothing. If she has no candies, she uses her money to buy as many candies as she currently can.</li>
+<li>In the evening, Alice eats one candy.</li>
+</ol>
+</p>
+
+<p>
+For the given x, y, and z, we want to calculate the amount of money Alice has left at the end of day z.
+(Alice may also have some candies at the end of day z. We are not interested in those.)
+</p>
+
+<p>
+You are given multiple queries (x,y,z) and you have to process all of them.
+More precisely, you are given vector &lt;int&gt;s <b>X</b>, <b>Y</b>, and <b>Z</b>, each with Q elements.
+For each valid i, you must answer the query with x=<b>X</b>[i], y=<b>Y</b>[i], and z=<b>Z</b>[i].
+Return a vector&lt;long long&gt; with Q elements: the answers to the queries, in the same order.
+</p></td></tr><tr><td colspan="2"><h3>Definition</h3></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td>Class:</td><td>CandyAddict</td></tr><tr><td>Method:</td><td>solve</td></tr><tr><td>Parameters:</td><td>vector &lt;int&gt;, vector &lt;int&gt;, vector &lt;int&gt;</td></tr><tr><td>Returns:</td><td>vector&lt;long long&gt;</td></tr><tr><td>Method signature:</td><td>vector&lt;long long&gt; solve(vector &lt;int&gt; X, vector &lt;int&gt; Y, vector &lt;int&gt; Z)</td></tr><tr><td colspan="2">(be sure your method is public)</td></tr></table></td></tr><tr><td colspan="2"><h3>Limits</h3></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td>Time limit (s):</td><td>2.000</td></tr><tr><td>Memory limit (MB):</td><td>256</td></tr></table></td></tr><tr><td colspan="2"><h3>Constraints</h3></td></tr><tr><td align="center" valign="top">-</td><td>The number of queries will be between 1 and 100, inclusive.</td></tr><tr><td align="center" valign="top">-</td><td><b>X</b>, <b>Y</b>, <b>Z</b> will contain same number of elements.</td></tr><tr><td align="center" valign="top">-</td><td>Each element of X, Y and Z will be between 1 and 1,000,000,000, inclusive.</td></tr><tr><td align="center" valign="top">-</td><td>For each valid i, Y[i] &lt;= X[i].</td></tr><tr><td colspan="2"><h3>Examples</h3></td></tr><tr><td align="center" nowrap="true">0)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>{5}</pre></td></tr><tr><td><pre>{3}</pre></td></tr><tr><td><pre>{3}</pre></td></tr></table></td></tr><tr><td><pre>Returns: {6 }</pre></td></tr><tr><td><table><tr><td colspan="2">There is only one query.
+In this query, Alice receives 5 dollars each day, a candy costs 3 dollars, and there are 3 days.
+The entire process will look as follows:
+<ul>
+<li>Day 1 morning: Alice receives 5 dollars. She now has 5 dollars and 0 candies.</li>
+<li>Day 1 noon: Alice has no candies, so she buys one. She now has 2 dollars and 1 candy.</li>
+<li>Day 1 evening: Alice eats a candy. She now has 2 dollars and 0 candies.</li>
+<li>Day 2 morning: Alice receives 5 dollars. She now has 7 dollars and 0 candies.</li>
+<li>Day 2 noon: Alice has no candies, so she buys two. She now has 1 dollar and 2 candies.</li>
+<li>Day 2 evening: Alice eats a candy. She now has 1 dollar and 1 candy.</li>
+<li>Day 3 morning: Alice receives 5 dollars. She now has 6 dollars and 1 candy.</li>
+<li>Day 3 noon: Alice still has some candies, so she does nothing. She still has 6 dollars and 1 candy.</li>
+<li>Day 3 evening: Alice eats a candy. She now has 6 dollars and 0 candies.</li>
+</ul>
+Hence, at the end of day 3 Alice will have 6 dollars.</td></tr></table></td></tr></table></td></tr><tr><td align="center" nowrap="true">1)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>{5,5,5,5,5}</pre></td></tr><tr><td><pre>{3,3,3,3,3}</pre></td></tr><tr><td><pre>{1,2,3,4,5}</pre></td></tr></table></td></tr><tr><td><pre>Returns: {2, 1, 6, 2, 7 }</pre></td></tr><tr><td><table><tr><td colspan="2"></td></tr></table></td></tr></table></td></tr><tr><td align="center" nowrap="true">2)</td><td></td></tr><tr><td>&#160;&#160;&#160;&#160;</td><td><table><tr><td><table><tr><td><pre>{1000000000,1000000000,1000000000,1000000000,1000000000}</pre></td></tr><tr><td><pre>{1,2,3,999999998,999999999}</pre></td></tr><tr><td><pre>{342568368,560496730,586947396,386937583,609483745}</pre></td></tr></table></td></tr><tr><td><pre>Returns: 
+{342568367000000000, 60496729000000000, 253614062000000001, 773875166,
+ 609483745 }</pre></td></tr><tr><td><table><tr><td colspan="2"></td></tr></table></td></tr></table></td></tr></table><p>This problem statement is the exclusive and proprietary property of TopCoder, Inc.  Any unauthorized use or reproduction of this information without the prior written consent of TopCoder, Inc. is strictly prohibited.  (c)2003, TopCoder, Inc.  All rights reserved.  </p></body></html>
