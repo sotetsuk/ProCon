@@ -41,6 +41,7 @@ int lca(int u, int v) {
 
 // O(NlogN)
 // 全ての2点間のLCAを求める
+// ex. ABC 014 D
 vector<int> G[MAX_V]; // グラフの隣接リスト表現
 int root; // 根ノードの番号
 
