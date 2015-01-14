@@ -23,3 +23,9 @@
 
 ### [2224 Save your cat](http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=2224) 2014/7/11
 **[最小全域木]** 最小ではなく，最大全域木をKruskal法で求める．
+
+### [1147 ICPC Score Totalizer Software](http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=1147) 2015/1/4
+[AOJ-ICPC] AOJ-ICPCの問題を解いていくことにした．
+
+### [1129 Hanafuda shuffle](http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=1129) 2015/1/4
+[AOJ-ICPC]
