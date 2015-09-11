@@ -9,7 +9,7 @@ public class POJ2385 {
     static int T, W;
     static int[] apples = new int[MAX_T];
 
-    static int[][][] dp = new int[MAX_T][MAX_W + 1][3];
+    static int[][][] dp = new int[MAX_T][MAX_W + 1][2];
 
     static void read() {
         T = sc.nextInt();
@@ -21,7 +21,7 @@ public class POJ2385 {
         return pos == 0 ? 1 : 0;
     }
 
-    static int catchApple(int t, int pos) {
+    static int canCatchApple(int t, int pos) {
         return pos == apples[t] ? 1 : 0;
     }
 
@@ -30,10 +30,10 @@ public class POJ2385 {
         if(nowT >= T) return 0;
         if(dp[nowT][remainedW][nowPos] > 0) return dp[nowT][remainedW][nowPos];
 
-        int ret = catchApple(nowT, nowPos) + dfs(nowT + 1, remainedW, nowPos);
+        int ret = canCatchApple(nowT, nowPos) + dfs(nowT + 1, remainedW, nowPos);
         if(remainedW > 0) {
             int switchedPos = swichPosition(nowPos);
-            ret = Math.max(ret, catchApple(nowT, switchedPos) + dfs(nowT + 1, remainedW - 1, switchedPos));
+            ret = Math.max(ret, canCatchApple(nowT, switchedPos) + dfs(nowT + 1, remainedW - 1, switchedPos));
         }
 
         return dp[nowT][remainedW][nowPos] = ret;
@@ -45,4 +45,3 @@ public class POJ2385 {
         return;
     }
 }
-
