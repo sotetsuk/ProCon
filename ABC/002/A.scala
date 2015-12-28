@@ -1,7 +1,7 @@
 /**
  * Created by sotetsuk on 2015/12/24.
  */
-object A2 {
+object A {
   def main(args:Array[String]):Unit = {
     val x = readLine.split(" ").map(_.toInt)
     if (x(0) > x(1)) {
