@@ -1,17 +1,13 @@
 import math
 
-n, h = [int(x) for x in raw_input().split()]
-a, b, c, d, e = [int(x) for x in raw_input().split()]
+N, H = [int(x) for x in raw_input().split()]
+A, B, C, D, E = [int(x) for x in raw_input().split()]
 
-m = []
-for x in range(n+1):
-    y = (1.*(n-x)*e-h-b*x)/(d+e)
-    print y
-    if int(y) == y:
-        y = int(y) + 1
-    else:
-        y = int(math.ceil(y))
-    if y >= 0:
-        print x, y, x*a+y*c
-        m.append(x * a + y * c)
-print min(m)
+m = 1e30
+epsilon = 1e-10
+for x in range(N + 1):
+    t = 1. * ((N - x) * E - H - B * x) / (D + E)
+    y = max(0, math.ceil(t + epsilon))
+    m = min(A * x + C * y, m)
+
+print int(m)

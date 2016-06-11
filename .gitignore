@@ -1,3 +1,7 @@
 *.out
 .*
 SRM_Arena/*
+SRM/arena/*
+*input*
+*output*
+*.class

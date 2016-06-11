@@ -14,35 +14,47 @@ using namespace std;
 typedef pair<int, int> pii;
 typedef long long int ll;
 
-const int MAX_N = 100000, MAX_M = 100000;
+const int MAX_N = 100000, MAX_M = 2 * 100000, MAX_LOG_D = 30;
 
 int N, M, D;
-int a[MAX_N+1];
-int ans[MAX_N+1];
+int A[MAX_M + 10];
+int to[MAX_N];
+int to_k[MAX_LOG_D][MAX_N];
 
 int main() {
     cin >> N >> M >> D;
-
-    int A;
-    for(int m = 0; m < M; m++) {
-        cin >> A;
-        swap(a[A], a[A+1]);
+    for(int i = 0; i < N; i++) to[i] = i;
+    int a;
+    for(int i = 0; i < M; i++) {
+        cin >> a; a--;
+        swap(to[a], to[a + 1]);
     }
 
-    for(int k = 1; k <= N; k++) {
-        int i = k;
-        for(int d = 0; d < D; d++) {
-            i = a[i];
+    // 2^k回作用させた時の結果をメモ
+    for(int i = 0; i < N; i++) to_k[0][i] = to[i];
+
+    for(int k = 1; k < MAX_LOG_D; k++) {
+        for(int i = 0; i < N; i++) {
+            to_k[k][i] = to_k[k - 1][to_k[k - 1][i]];
         }
-        ans[k] = i;
     }
 
-    for(int i = 1; i <= N; i++) {
-        a[ans[i]] = i;
+    // 作用させる
+    for(int i = 0; i < N; i++) {
+        int j = i;
+        int d = D;
+        for(int k = 0; k < MAX_LOG_D; k++) {
+            if(d >> k & 1) {
+                j = to_k[k][j];
+            }
+        }
+
+        to[j] = i;
     }
 
-    for(int i = 1; i <= N; i++) {
-        cout << a[i] << endl;
+    // 結果を表示
+    for(int i = 0; i < N; i++) {
+        cout << ++to[i] << endl;
     }
 
     return 0;
