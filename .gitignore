@@ -5,3 +5,5 @@ SRM/arena/*
 *input*
 *output*
 *.class
+*.iml
+*.class
