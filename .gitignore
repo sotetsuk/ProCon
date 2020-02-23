@@ -7,3 +7,4 @@ SRM/arena/*
 *.class
 *.iml
 *.class
+cmake-build-debug/*
