@@ -1,9 +1,16 @@
-# From https://qiita.com/nokaruku/items/2cb98f6276d81c0303a2
+# ref. https://qiita.com/nokaruku/items/2cb98f6276d81c0303a2
 
 cmake_minimum_required(VERSION 3.14)
 project(procon)
 
 set(CMAKE_CXX_STANDARD 14)
+
+# Use boost (ref. https://stackoverflow.com/questions/3808775/cmake-doesnt-find-boost)
+find_package(Boost)
+IF (Boost_FOUND)
+    INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIR})
+    ADD_DEFINITIONS( "-DHAS_BOOST" )
+ENDIF()
 
 # 指定したとこ含めて、cppファイルがあったらビルド構成作る
 MACRO(CREATE_BINARY target_dir)
