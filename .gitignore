@@ -8,3 +8,7 @@ SRM/arena/*
 *.iml
 *.class
 cmake-build-debug/*
+*.in
+*.out
+Makefile
+!template/Makefil
