@@ -27,10 +27,35 @@ using ld = long double;
 using mpi = mp::cpp_int;
 using mpf = mp::number<mp::cpp_dec_float<1024>>;
 
-int mod = 1000000009;
+int MOD = 1000000007;
+
+ll modpow(ll a, ll n, ll mod) {
+    ll res = 1;
+    while (n > 0) {
+        if (n & 1) res = res * a % mod;
+        a = a * a % mod;
+        n >>= 1;
+    }
+    return res;
+}
 
 int main() {
-    int N, K;
+    ll N, K;
     cin >> N >> K;
+    vector<ll> v(K+5);
+    ll ans = 0;
+    for (ll x = K; x >= 1; --x) {
+        ll tmp = modpow(K / x, N, MOD);
+        tmp %= MOD;
+        for (ll y = x * 2; y <= K; y += x) {
+            tmp -= v[y];
+            tmp += MOD;
+            tmp %= MOD;
+        }
+        v[x] = tmp;
+        ans += x * tmp % MOD;
+        ans %= MOD;
+    }
+    cout << ans << endl;
     return 0;
 }
