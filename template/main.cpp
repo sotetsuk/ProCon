@@ -27,6 +27,10 @@ using ld = long double;
 using mpi = mp::cpp_int;
 using mpf = mp::number<mp::cpp_dec_float<1024>>;
 
+// consts
+int MOD = 1000000007;  // https://qiita.com/drken/items/3b4fdf0a78e7a138cd9a
+
+
 int main() {
     return 0;
 }
