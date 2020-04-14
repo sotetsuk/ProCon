@@ -28,20 +28,47 @@ using mpi = mp::cpp_int;
 using mpf = mp::number<mp::cpp_dec_float<1024>>;
 
 int main() {
-    int n, t;
-    double am = 0, bm = 0;
-    vector<int> a;
-    vector<int> b;
+    ll n, t;
+    vector<ll> a;
+    vector<ll> b;
     cin >> n;
-    for (int i = 0; i < n; ++i) {
+    for (ll i = 0; i < n; ++i) {
         cin >> t;
         a.push_back(t);
-        am += t;
         cin >> t;
         b.push_back(t);
-        bm += t;
     }
-    am /= n;
-    bm /= n;
+    ll a_min = 0;
+    ll tmp_max = numeric_limits<ll>::max();
+    for(auto x: a) {
+        ll tmp = 0;
+        for(auto i: a) {
+            tmp += abs(x - i);
+        }
+        if (tmp < tmp_max) {
+            a_min = x;
+            tmp_max = tmp;
+        }
+    }
+    ll b_min = 0;
+    tmp_max = numeric_limits<ll>::max();
+    for(auto x: b) {
+        ll tmp = 0;
+        for(auto i: b) {
+            tmp += abs(x - i);
+        }
+        if (tmp < tmp_max) {
+            b_min = x;
+            tmp_max = tmp;
+        }
+    }
+    ll ans = 0;
+    for (ll i = 0; i < n; ++i) {
+        ans += abs(a_min - a[i]);
+        ans += b[i] - a[i];
+        ans += abs(b_min - b[i]);
+    }
+    cout << ans << endl;
+
     return 0;
 }
