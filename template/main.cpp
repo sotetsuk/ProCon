@@ -13,6 +13,7 @@
 #include <set>
 #include <unordered_set>
 #include <sstream>
+#include <numeric>
 #include <boost/multiprecision/cpp_dec_float.hpp>
 #include <boost/multiprecision/cpp_int.hpp>
 
