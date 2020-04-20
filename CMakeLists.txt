@@ -3,7 +3,7 @@
 cmake_minimum_required(VERSION 3.14)
 project(procon)
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 
 # Use boost (ref. https://stackoverflow.com/questions/3808775/cmake-doesnt-find-boost)
 find_package(Boost)
