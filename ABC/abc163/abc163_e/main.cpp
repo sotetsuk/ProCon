@@ -22,9 +22,10 @@ using namespace std;
 namespace mp = boost::multiprecision;
 
 // types
-using pii = pair<int, int>;
 using ll = long long int;
 using ld = long double;
+using pii = pair<int, int>;
+using pll = pair<ll, ll>;
 using mpi = mp::cpp_int;
 using mpf = mp::number<mp::cpp_dec_float<1024>>;
 
@@ -34,49 +35,35 @@ int MOD = 1000000007;  // https://qiita.com/drken/items/3b4fdf0a78e7a138cd9a
 struct Swap { ll v; int x; int y; };
 
 int main() {
-    int n, a;
+    ll n, a;
     cin >> n;
-    vector<pii> v;
-    for (int i = 0; i < n; ++i) {
+    vector<pll> v;
+    for (ll i = 0; i < n; ++i) {
         cin >> a;
-        v.emplace_back(make_pair(i, a));
+        v.emplace_back(make_pair(a, i));
     }
-    auto comp = [](Swap x, Swap y){ return x.v > y.v; };
-    priority_queue<Swap, vector<Swap>, decltype(comp)> q(comp);
-    vector<bool> used(n);
-    bool updated = true;
-    while (updated) {
-        updated = false;
-        for (int i = 0; i < n; ++i) {
-            for (int j = 0; j < n; ++j) {
-                auto x = v[i];
-                auto y = v[j];
-                auto i0 = x.first;
-                auto j0 = y.first;
-                auto A_i = x.second;
-                auto A_j = y.second;
-                auto diff = A_i * abs(j - i0) - A_i * abs(i - i0) + A_j * abs(i - j0) - A_j * abs(j - j0);
-                if (diff <= 0) continue;
-                q.push(Swap{diff, i, j});
-                updated = true;
-            }
-        }
-        for (int i = 0; i < n; ++i) used[i] = false;
-        while (!q.empty()) {
-            auto s = q.top(); q.pop();
-            auto x = s.x;
-            auto y = s.y;
-            if (used[x]||used[y]) continue;
-            swap(v[x], v[y]);
-            used[x] = true;
-            used[y] = true;
+    sort(v.begin(), v.end());
+    reverse(v.begin(), v.end());
+    vector<vector<ll>> dp(n + 1, vector<ll>(n + 1, INT_MIN));
+    dp[0][0] = 0;
+    for (int k = 0; k < n; ++k) {
+        for (int i = 0; i <= k + 1; ++i) {
+            int j = k - i + 1;
+            // k = 0 i = 0 j = 1
+            // k = 0 i = 1 j = 0
+            // k = n-1 i = 0 j = n
+            // k = n-1 i = n j = 0
+            ll A = v[k].first;
+            ll i0 = v[k].second;
+            if (i-1 >= 0) dp[i][j] = max(dp[i][j], dp[i-1][j] + A * abs(i - 1 - i0));
+            if (j-1 >= 0) dp[i][j] = max(dp[i][j], dp[i][j-1] + A * abs(n - j - i0));
+            // cout << "i " << i << "\tj " << j << "\ti0 " << i0 << "\tA " << A << "\tdp[i][j] " << dp[i][j] << endl;
         }
     }
     ll ans = 0;
-    for (int i = 0; i < n; ++i) {
-        auto i0 = v[i].first;
-        auto A = v[i].second;
-        ans += A * abs(i - i0);
+    for (ll i = 0; i <= n; ++i) {
+        ll j = n - i;
+        ans = max(ans, dp[i][j]);
     }
     cout << ans << endl;
     return 0;
