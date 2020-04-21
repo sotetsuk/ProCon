@@ -53,36 +53,36 @@ using ld = long double;
 //     if (u < 0) u += MOD;
 //     return u;
 // }
+int num_verex, E, s, t, d;
+vector<vector<int>> dist;
+vector<vector<int>> dp;
 
-// V: number of nodes
 // v: current node
 // S: all visited nodes
-// dp[S][v]: Minimum total cost from 0 to v through all node in S
+// dp[S][v]: Minimum total cost from current node v to node 0 given visited nodes
 // answer: dp[(1<<V)-1][0];
-int tsp(int S, int v, int V, vector<vector<int>> &dist, vector<vector<int>> &dp) {
-    if (S == 0) return v == 0 ? 0 : INT_MAX;
+int tsp(int S, int v) {
+    if (S == (1 << num_verex) - 1) return v == 0 ? 0 : INT_MAX;
     if (dp[S][v] >= 0) return dp[S][v];
     int ret = INT_MAX;
-    for (int u = 0; u < V; ++u) {
-        if (!(S&(1<<u))) continue;
-        int tmp = tsp(S&(~(1<<u)), u, V, dist, dp);
+    for (int u = 0; u < num_verex; ++u) {
+        if ((S >> u) & 1) continue;
+        int tmp = tsp(S | (1 << u), u);
         if (tmp == INT_MAX || dist[u][v] == INT_MAX) continue;
         ret = min(ret, tmp + dist[u][v]);
     }
     return dp[S][v] = ret;
 }
 
-
 int main() {
-    int V, E, s, t, d;
-    cin >> V >> E;
-    vector<vector<int>> dist(V, vector<int>(V, INT_MAX));
+    cin >> num_verex >> E;
+    dist = vector<vector<int>>(num_verex, vector<int>(num_verex, INT_MAX));
     for (int i = 0; i < E; ++i) {
         cin >> s >> t >> d;
         dist[s][t] = d;
     }
-    vector<vector<int>> dp(1<<(V+2), vector<int>(V, -1));
-    int ans = tsp((1<<V) - 1, 0, V, dist, dp);
+    dp = vector<vector<int>>(1<<(num_verex+2), vector<int>(num_verex + 5, -1));
+    int ans = tsp(0, 0);
     cout << ((ans != INT_MAX) ? ans : -1) << endl;
     return 0;
 }
