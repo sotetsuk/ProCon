@@ -39,11 +39,11 @@ using pll = pair<ll, ll>;
 ///////////////////////////////////////////////////////////////
 // ll MOD = 1000000007;
 //
-//  ll mod(ll val) {
-//      ll res = val % MOD;
-//      if (res < 0) res += MOD;
-//      return res;
-//  }
+// ll mod(long long val) {
+//     long long res = val % MOD;
+//     if (res < 0) res += MOD;
+//     return res;
+// }
 //
 // ll modinv(ll a) {
 //     ll b = MOD, u = 1, v = 0;
@@ -77,6 +77,22 @@ using pll = pair<ll, ll>;
 
 
 int main() {
-    // cout << setprecision(10);
+    ld p;
+    cin >> p;
+    if (p < 1.0) {
+        cout << p << endl;
+        return 0;
+    }
+    auto f = [&p](auto x) { return x + p / pow(4, (x/3)); };
+    ld l = 0;
+    ld r = 10 * p;
+    while (r - l > 1e-10) {
+        ld mid_l = l / 3 * 2 + r / 3;
+        ld mid_r = l / 3 + r / 3 * 2;
+        if (f(mid_l) < f(mid_r)) r = mid_r;
+        else l = mid_l;
+    }
+    cout << setprecision(10);
+    cout << f(l) << endl;
     return 0;
 }
