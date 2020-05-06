@@ -79,48 +79,31 @@ const ll MAX_H = 130, MAX_W = 130;
 ll H, W, K, V;
 ll A[MAX_W][MAX_W];
 
-ll cost_rect(ll i0, ll j0, ll i1, ll j1) {
-    ll ret;
-    if (i0 == 0 && j0 == 0) {
-        ret = A[i1][j1];
-    } else if (i0 == 0) {
-        ret = A[i1][j1] - A[i1][j0-1];
-    } else if (j0 == 0) {
-        ret = A[i1][j1] - A[i0-1][j1];
-    } else {
-        ret = A[i1][j1] - A[i1][j0-1] - A[i0-1][j1] + A[i0-1][j0-1];
+void dump() {
+    for (int i = 0; i <= H; ++i) {
+        for (int j = 0; j <= W; ++j) {
+            cout << A[i][j] << "\t";
+        }
+        cout << endl;
     }
-    return ret;
 }
 
 int main() {
     cin >> H >> W >> K >> V;
     memset(A, 0, sizeof(A));
-    for (ll i = 0; i < H; ++i) {
-        for (ll j = 0; j < W; ++j) {
-            cin >> A[i][j];
-        }
-    }
-    for (ll i = 0; i < H; ++i) {
-        for (ll j = 0; j < W; ++j) {
-            if (j - 1 >= 0) A[i][j] += A[i][j-1];
-        }
-    }
-    for (ll j = 0; j < W; ++j) {
-        for (ll i = 0; i < H; ++i) {
-            if (i - 1 >= 0) A[i][j] += A[i-1][j];
-        }
-    }
-
-    // dump();
-    ll ans = 0;
-    for (int i = 0; i < H; ++i) {
-        for (int j = 0; j < W; ++j) {
-            for (int l = i; l < H; ++l) {
-                for (int m = j; m < W; ++m) {
-                    ll c = cost_rect(i, j, l, m);
-                    ll s = (l - i + 1) * (m - j + 1);
-                    if (c <= V - s * K) ans = max(ans, s);
+    for (ll i = 0; i < H; ++i) for (ll j = 0; j < W; ++j) cin >> A[i+1][j+1];
+    // take care of i <= H and j <= W
+    for (int i = 0; i <= H; ++i) for (int j = 0; j < W; ++j) A[i][j+1] += A[i][j];
+    for (int j = 0; j <= W; ++j) for (int i = 0; i < H; ++i) A[i+1][j] += A[i][j];
+    int ans = 0;
+    for (int i0 = 0; i0 < H; ++i0) {
+        for (int j0 = 0; j0 < W; ++j0) {
+            for (int i1 = i0; i1 <= H; ++i1) {
+                for (int j1 = j0; j1 <= W; ++j1) {
+                    // volume of [i0, i1) x [j0, j1)
+                    auto cost = A[i1][j1] - A[i1][j0] - A[i0][j1] + A[i0][j0];
+                    auto v = (i1 - i0) * (j1 - j0);
+                    if (cost <= V - v * K) ans = max(ans, v);
                 }
             }
         }
