@@ -109,6 +109,31 @@ int main() {
         edges[u].push_back(v);
         edges[v].push_back(u);
     }
+    vector<vector<int>> G;
+    for (int i = 0; i < N; ++i) {
+        unordered_set<int> g;
+        queue<pii> q;
+        q.push({i, R[i]});
+        while (!q.empty()) {
+            auto p = q.front(); q.pop();
+            auto j = p.first;
+            auto r = p.second;
+            if (g.find(j) != g.end()) continue;
+            g.insert(j);
+            --r;
+            if (r >= 0) {
+                for (const auto &e : edges[j]) {
+                    q.push({e, r});
+                }
+            }
+        }
+        // cout << "===" << endl;
+        // cout << i << endl;
+        // cout << "===" << endl;
+        // for (const auto &e: g) { cout << e << "\t"; };
+        // cout << endl;
+        G.emplace_back(g.begin(), g.end());
+    }
     priority_queue<pii, vector<pii>, greater<>> q;
     for (int i = 0; i < MAX_N; ++i) d[i] = INT_MAX;
     d[0] = 0;
@@ -122,10 +147,7 @@ int main() {
         // cout << "=========" << endl;
         // dump();
         if (d[curr] < cost) continue;
-        vector<bool> visited(N, false);
-        vector<int> nodes;
-        visit(curr, R[curr], visited, nodes);
-        for (const auto &next: nodes) {
+        for (const auto &next: G[curr]) {
             // cout << "  " << curr << " " << next << endl;
             if (curr != next && d[curr] != INT_MAX && d[next] > d[curr] + C[curr]) {
                 d[next] = d[curr] + C[curr];
