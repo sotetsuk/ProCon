@@ -34,46 +34,45 @@ using pll = pair<ll, ll>;
 // using mpi = mp::cpp_int;
 // using mpf = mp::number<mp::cpp_dec_float<1024>>;
 
-///////////////////////////////////////////////////////////////
-// mod https://qiita.com/drken/items/3b4fdf0a78e7a138cd9a
-///////////////////////////////////////////////////////////////
-// ll MOD = 1000000007;
-//
-//  ll mod(ll val) {
-//      ll res = val % MOD;
-//      if (res < 0) res += MOD;
-//      return res;
-//  }
-//
-// ll modinv(ll a) {
-//     ll b = MOD, u = 1, v = 0;
-//     while (b) {
-//         ll t = a / b;
-//         a -= t * b; swap(a, b);
-//         u -= t * v; swap(u, v);
-//     }
-//     u %= MOD;
-//     if (u < 0) u += MOD;
-//     return u;
-// }
-//
-// const int MAX = -1;
-// ll fac[MAX], finv[MAX], inv[MAX];
-// void com_init() {  // initialize nCk table with O(N)
-//     fac[0] = fac[1] = 1;
-//     finv[0] = finv[1] = 1;
-//     inv[1] = 1;
-//     for (int i = 2; i < MAX; i++){
-//         fac[i] = fac[i - 1] * i % MOD;
-//         inv[i] = MOD - inv[MOD%i] * (MOD / i) % MOD;
-//         finv[i] = finv[i - 1] * inv[i] % MOD;
-//     }
-// }
-// ll com(int n, int k){  // nCk
-//     if (n < k) return 0;
-//     if (n < 0 || k < 0) return 0;
-//     return fac[n] * (finv[k] * finv[n - k] % MOD) % MOD;
-// }
+/////////////////////////////////////////////////////////////////
+// https://github.com/atcoder-live/library/blob/master/mint.cpp
+/////////////////////////////////////////////////////////////////
+// auto mod int
+// https://youtu.be/L8grWxBlIZ4?t=9858
+// https://youtu.be/ERZuLAxZffQ?t=4807 : optimize
+// https://youtu.be/8uowVvQ_-Mo?t=1329 : division
+const int mod = 1000000007;
+struct mint {
+    ll x; // typedef long long ll;
+    mint(ll x=0):x((x%mod+mod)%mod){}
+    mint operator-() const { return mint(-x);}
+    mint& operator+=(const mint a) {
+        if ((x += a.x) >= mod) x -= mod;
+        return *this;
+    }
+    mint& operator-=(const mint a) {
+        if ((x += mod-a.x) >= mod) x -= mod;
+        return *this;
+    }
+    mint& operator*=(const mint a) { (x *= a.x) %= mod; return *this;}
+    mint operator+(const mint a) const { return mint(*this) += a;}
+    mint operator-(const mint a) const { return mint(*this) -= a;}
+    mint operator*(const mint a) const { return mint(*this) *= a;}
+    mint pow(ll t) const {
+        if (!t) return 1;
+        mint a = pow(t>>1);
+        a *= a;
+        if (t&1) a *= *this;
+        return a;
+    }
+
+    // for prime mod
+    mint inv() const { return pow(mod-2);}
+    mint& operator/=(const mint a) { return *this *= a.inv();}
+    mint operator/(const mint a) const { return mint(*this) /= a;}
+};
+istream& operator>>(istream& is, const mint& a) { return is >> a.x;}
+ostream& operator<<(ostream& os, const mint& a) { return os << a.x;}
 
 
 int main() {
