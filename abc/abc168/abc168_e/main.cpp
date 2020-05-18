@@ -9,6 +9,7 @@
 #include <stack>
 #include <queue>
 #include <map>
+#include <complex>
 #include <unordered_map>
 #include <set>
 #include <unordered_set>
@@ -34,82 +35,79 @@ using pll = pair<ll, ll>;
 // using mpi = mp::cpp_int;
 // using mpf = mp::number<mp::cpp_dec_float<1024>>;
 
-///////////////////////////////////////////////////////////////
-// mod https://qiita.com/drken/items/3b4fdf0a78e7a138cd9a
-///////////////////////////////////////////////////////////////
-ll MOD = 1000000007;
-
- ll mod(ll val) {
-     ll res = val % MOD;
-     if (res < 0) res += MOD;
-     return res;
- }
-
-ll modinv(ll a) {
-    ll b = MOD, u = 1, v = 0;
-    while (b) {
-        ll t = a / b;
-        a -= t * b; swap(a, b);
-        u -= t * v; swap(u, v);
+/////////////////////////////////////////////////////////////////
+// https://github.com/atcoder-live/library/blob/master/mint.cpp
+/////////////////////////////////////////////////////////////////
+// auto mod int
+// https://youtu.be/L8grWxBlIZ4?t=9858
+// https://youtu.be/ERZuLAxZffQ?t=4807 : optimize
+// https://youtu.be/8uowVvQ_-Mo?t=1329 : division
+const int mod = 1000000007;
+struct mint {
+    ll x; // typedef long long ll;
+    mint(ll x=0):x((x%mod+mod)%mod){}
+    mint operator-() const { return mint(-x);}
+    mint& operator+=(const mint a) {
+        if ((x += a.x) >= mod) x -= mod;
+        return *this;
     }
-    u %= MOD;
-    if (u < 0) u += MOD;
-    return u;
-}
-//
-// const int MAX = -1;
-// ll fac[MAX], finv[MAX], inv[MAX];
-// void com_init() {  // initialize nCk table with O(N)
-//     fac[0] = fac[1] = 1;
-//     finv[0] = finv[1] = 1;
-//     inv[1] = 1;
-//     for (int i = 2; i < MAX; i++){
-//         fac[i] = fac[i - 1] * i % MOD;
-//         inv[i] = MOD - inv[MOD%i] * (MOD / i) % MOD;
-//         finv[i] = finv[i - 1] * inv[i] % MOD;
-//     }
-// }
-// ll com(int n, int k){  // nCk
-//     if (n < k) return 0;
-//     if (n < 0 || k < 0) return 0;
-//     return fac[n] * (finv[k] * finv[n - k] % MOD) % MOD;
-// }
-
-const ll MAX_N = 2005;
-ll dp[MAX_N][MAX_N];
-ll ok[MAX_N][MAX_N];
-ll A[MAX_N];
-ll B[MAX_N];
-
-ll dfs(int i, int j) {
-    // cout << i << " " << j << endl;
-    if (j < i) return 0;
-    if (dp[i][j] != -1) return dp[i][j];
-    ll ret = 0;
-    ret = mod(ret + dfs(i + 1, j));
-    ret = mod(ret + dfs(i, j - 1));
-    ret = mod(ret - dfs(i + 1, j - 1));
-    // cout << i << " " << j << endl;
-    if (ok[i + 1][j] == 1 && ok[i][j - 1] == 1 && A[i] * A[j] + B[i] * B[j] != 0) {
-        ok[i][j] = 1;
-        ret = mod(ret + 1);
+    mint& operator-=(const mint a) {
+        if ((x += mod-a.x) >= mod) x -= mod;
+        return *this;
     }
-    return ret;
-}
+    mint& operator*=(const mint a) { (x *= a.x) %= mod; return *this;}
+    mint operator+(const mint a) const { return mint(*this) += a;}
+    mint operator-(const mint a) const { return mint(*this) -= a;}
+    mint operator*(const mint a) const { return mint(*this) *= a;}
+    mint pow(ll t) const {
+        if (!t) return 1;
+        mint a = pow(t>>1);
+        a *= a;
+        if (t&1) a *= *this;
+        return a;
+    }
+
+    // for prime mod
+    mint inv() const { return pow(mod-2);}
+    mint& operator/=(const mint a) { return *this *= a.inv();}
+    mint operator/(const mint a) const { return mint(*this) /= a;}
+};
+istream& operator>>(istream& is, const mint& a) { return is >> a.x;}
+ostream& operator<<(ostream& os, const mint& a) { return os << a.x;}
 
 
 int main() {
     ll N; std::cin >> N;
-    memset(dp, -1, sizeof(dp));
-    memset(ok, -1, sizeof(ok));
+    ll n_zero = 0;
+    map<pll, pll> m;
     for (int i = 0; i < N; ++i) {
-        std::cin >> A[i] >> B[i];
-        dp[i][i] = 1;
-        ok[i][i] = 1;
+        ll x, y; std::cin >> x >> y;
+        if (x == 0 && y == 0) {
+            n_zero++;
+            continue;
+        }
+        if (y < 0) x = -x, y = -y;
+        if (x < 0 && y == 0) x = -x;
+        auto g = gcd(x, y);
+        x /= g;
+        y /= g;
+        if (x > 0 && y >= 0) m[{x, y}].first++;
+        else m[{y, -x}].second++;
     }
-    ll ans = dfs(0, N - 1);
+    mint ans = 1;
+    for (const auto kv: m) {
+        auto key = kv.first;
+        auto val = kv.second;
+        auto s = val.first;
+        auto t = val.second;
+        // cout << key.first << " " << key.second << " " << s << " " << t << endl;
+        mint tmp{1};
+        tmp += mint(2).pow(s) - 1;
+        tmp += mint(2).pow(t) - 1;
+        ans = ans * tmp;
+    }
+    ans -= 1;
+    ans += n_zero;
     cout << ans << endl;
-
-    // cout << setprecision(10);
     return 0;
 }
