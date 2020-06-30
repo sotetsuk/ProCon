@@ -8,6 +8,7 @@ SRM/arena/*
 *.iml
 *.class
 cmake-build-debug/*
+cmake-build-debug-procon/*
 *.in
 *.out
 Makefile
