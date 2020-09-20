@@ -35,3 +35,4 @@ MACRO(CREATE_BINARY target_dir)
 ENDMACRO()
 
 CREATE_BINARY(${CMAKE_CURRENT_SOURCE_DIR})
+include_directories(ac-library)
