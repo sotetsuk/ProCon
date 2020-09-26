@@ -8,6 +8,6 @@ r: a.out
 	./a.out
 
 a.out: main.cpp
-	g++ -std=c++17 -Wall --pedantic-errors main.cpp
+	g++ -std=c++17 -I /Users/sotetsuk/github/procon/ac-library main.cpp
 
 .PHONY : s t r
